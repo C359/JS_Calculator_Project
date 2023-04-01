@@ -10,13 +10,12 @@ const divide = (a,b) => (a / b);
 
 const power = (a,b) => (a ** b);
 
-//read in value, read in operator, read in value
-//if any other operator is called or equals is pressed, then perform operation
 
-let numOne = 22;
-let numTwo = 10;
-let operation = 'add';
+let numOne = 0;
+let numTwo = 0;
+let operation = '';
 
+//function to be called after two operands and an operation are selected
 function operator(numOne, operation, numTwo) {
     let result = 0;
 
@@ -39,6 +38,14 @@ function operator(numOne, operation, numTwo) {
     }
 
     console.log(result);
-
+    numOne = result;
+    return result;
+    
 }
+
+const buttons = document.querySelectorAll('.btn')
+
+buttons.forEach((button)=> button.addEventListener('click', (e)=> {
+    console.log(e.target);
+}));
 
