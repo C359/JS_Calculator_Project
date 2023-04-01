@@ -7,6 +7,7 @@ body {
     font-family: sans-serif;
     justify-content: center;
     align-items: center;
+    font-family: system-ui, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .calc {
@@ -60,6 +61,14 @@ body {
 .num, .option{
     width: 36px;
     height: 36px;
+}
+
+.num {
+    background-color: lightblue;
+}
+
+.option {
+    background-color: lightcoral;
 }
 
 
