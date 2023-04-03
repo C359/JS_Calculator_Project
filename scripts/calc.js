@@ -32,7 +32,7 @@ function operator(numOne, operation, numTwo) {
             break;
     }
     //display result
-    screenText.textContent = result;
+    screenText.textContent = roundNumbers(result);
     return result;
 
 }
@@ -55,7 +55,12 @@ function checkInput (id) {
     }
     else if (id.match(/[0-9]/)) {
         currentNum.push(+id);
-        screenText.textContent = currentNum.join('');
+        screenText.textContent = roundNumbers(currentNum.join(''));
+        return;
+    } 
+    else if (id === 'dot' && !(currentNum.includes('.'))) {
+        currentNum.push('.');
+        screenText.textContent = roundNumbers(currentNum.join(''));
         return;
     } 
     else if (id.match(/op*/) && numOne === 'start') {
@@ -79,4 +84,15 @@ function checkInput (id) {
     } 
     operation = id;
 }
-     
+
+function roundNumbers(testNumber) {
+    if (testNumber == Math.floor(testNumber)){
+        return testNumber;
+    }
+    
+    let decPlaces = testNumber.toString().split(".")[1].length;
+    decPlaces > 5? decPlaces = 5 : 'nothing';
+    let roundingConversion = `1e${decPlaces}`;
+   
+    return (Math.round(testNumber * roundingConversion) / roundingConversion);
+}
