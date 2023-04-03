@@ -7,7 +7,7 @@ body {
     font-family: sans-serif;
     justify-content: center;
     align-items: center;
-    font-family: system-ui, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Courier New', Courier, monospace, sans-serif;
 }
 
 /*calculator body*/
@@ -15,8 +15,9 @@ body {
     display: flex;
     flex-direction: column;
     width: 250px;
-    height: 350px;
+    height: 315px;
     background-color: grey;
+    border: 2px solid black;
 }
 
 /*calculator screen*/
@@ -26,7 +27,9 @@ body {
     height: 70px;
     background-color: lightgray;
     margin: 10px 10px;
-    border: 10px solid darkgray;
+    border-style: solid;
+    border-width: 10px;
+    border-color: rgb(116, 116, 116) rgb(68, 68, 68) rgb(68, 68, 68) rgb(116, 116, 116);
     text-align: right;
     position: relative;
 }
@@ -64,10 +67,12 @@ body {
     gap: 8px;
 }
 
-/*button sizing*/
+/*all buttons*/
 .num, .option{
     width: 36px;
     height: 36px;
+    font-size: 12px;
+    font-weight: 800;
 }
 
 /*left buttons*/
