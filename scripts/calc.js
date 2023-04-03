@@ -55,7 +55,7 @@ function checkInput (id) {
     }
     else if (id.match(/[0-9]/)) {
         currentNum.push(+id);
-        console.log(currentNum);
+        screenText.textContent = currentNum.join('');
         return;
     } 
     else if (id.match(/op*/) && numOne === 'start') {
@@ -77,9 +77,6 @@ function checkInput (id) {
         id === 'op-equals' ? operation = 'start': operation = id;
         return;
     } 
-   
     operation = id;
-    console.log('catching op');
-    console.log(numOne, operation, numTwo);
 }
      
