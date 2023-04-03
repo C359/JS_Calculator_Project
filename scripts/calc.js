@@ -48,9 +48,11 @@ function operator(numOne, operation, numTwo) {
 
 }
 
+//variables for dom elements
 const screenText = document.querySelector('.screen-text')
 const buttons = document.querySelectorAll('.btn')
 
+//call checkInput with the id of any clicked button
 buttons.forEach((button)=> button.addEventListener('click', (e)=> {
     checkInput(e.target.id);
 }));
@@ -108,24 +110,33 @@ function checkInput (id) {
     operation = id;
 }
 
+
+//validate the Number and perform any necessary conversiond before displaying
 function checkNumber(testNumber) {
     let numLength = testNumber.toString().length;
+    let intLength = testNumber.toString().split(".")[0].length
 
-    if(numLength > 10) {
-        return 'Text Limit';
+    /*screen can only hold 10 characters. If there are over 10 digits and 6 of them are before the decimal, 
+    then rounding will not shorten and only the first 6 should be displayed followed by '...' */
+    if(numLength > 10 & intLength > 6) {
+        return (testNumber.toString().slice(0,6) + '...');
     } 
+    //if the number does not include a decimal or ends with a zero it should not be converted and can be displayed as is
     else if (!(testNumber.toString().includes('.')) || testNumber.toString()[numLength-1] == 0){
         return testNumber;
     }
     
     let decPoints = testNumber.toString().split(".")[1].length
 
+    //if more than three decimal points, round down to three decimal places and return
     decPoints > 3? decPoints = 3 : 'nothing';
     let roundingConversion = `1e${decPoints}`;
    
     return (Math.round(testNumber * roundingConversion) / roundingConversion);
 }
 
+
+//call checkNumber and display the output to the calculator screen
 function setDisplay(numToDisplay){
     let displayText = checkNumber(numToDisplay);
     screenText.textContent = displayText;
