@@ -8,8 +8,6 @@ const power = (a,b) => (a ** b);
 let numOne = 'start';
 let numTwo = 'start';
 let currentNum = [];
-let prevButton = 'start';
-let currentButton = 'start';
 let operation = 'start';
 
 //function to be called after two operands and an operation are selected
@@ -32,14 +30,11 @@ function operator(numOne, operation, numTwo) {
         case 'op-power':
             result = power(numOne, numTwo);
             break;
-        case 'op-equals':
-            result = power(numOne, numTwo);
-            break;
     }
-
-    console.log(result);
+    //display result
+    screenText.textContent = result;
     return result;
-    
+
 }
 
 const screenText = document.querySelector('.screen-text')
@@ -50,52 +45,41 @@ buttons.forEach((button)=> button.addEventListener('click', (e)=> {
 }));
 
 function checkInput (id) {
-    //if prev button was num and current button is num, still adjusting num
-    //if current button is equals, and n
 
-    prevButton = currentButton;
-    currentButton = id;
-
-    //if currentbutton is a number and previous button was a number and operand is still being entered
-
-    //if current button is a num and numone, numtwo, and operand exist we are still making numtwo
-    //if current button is a num and numone, and operand exist we are still makking numtwo
-    //if current button is a num and numone, exists but not operand we are making numone
-    //if current button is an operand and numone exists, but not numtwo
-    if(id === 'clear') {
-        numOne = [];
-        numTwo = [];
+    if (id === 'clear') {
+        numOne = 'start';
+        numTwo = 'start';
         operation = 'start';
+        currentNum = [];
+        screenText.textContent = 0;
     }
-    //if current button is number and previous button is number or blank then an operand is still being entered
-    if(id.match(/[0-9]/)) {
+    else if (id.match(/[0-9]/)) {
         currentNum.push(+id);
         console.log(currentNum);
-    //if current button is number and previous button was not then a new number is being entered
+        return;
     } 
-    
-    if (id.match(/op*/)) {
-        console.log('operator');
+    else if (id.match(/op*/) && numOne === 'start') {
+        numOne = currentNum.join('');
+        currentNum = [];
+        console.log(numOne, operation, numTwo);
+
+    } 
+    else if (id.match(/op*/) && numTwo === 'start' && operation !== 'start') {
         numTwo = currentNum.join('');
         currentNum = [];
-
-        if (numOne !== 'start' && numTwo !== 'start'){
-            let answer = operator(+numOne, operation, +numTwo);
-            screenText.textContent = answer
-            numOne = answer;
-            numTwo = 'start';
-            operation = id;
-            return;
-        }
-        operation = id;
-        numOne = numTwo;
-        numTwo = 'start';
+        console.log(numOne, operation, numTwo);
     }
-    
- 
 
-    //num op num op num op
-    //num1 op num2 op (num2 becomes num1) num2 op (num2 becomes num1)
-
+    if (numOne !== 'start' && numTwo !== 'start' && id.match(/op*/)) {
+        let answer = operator(+numOne, operation, +numTwo);
+        numOne = answer;
+        numTwo = 'start';
+        id === 'op-equals' ? operation = 'start': operation = id;
+        return;
+    } 
    
+    operation = id;
+    console.log('catching op');
+    console.log(numOne, operation, numTwo);
 }
+     
