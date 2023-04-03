@@ -10,6 +10,7 @@ body {
     font-family: system-ui, 'Segoe UI', 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
+/*calculator body*/
 .calc {
     display: flex;
     flex-direction: column;
@@ -18,6 +19,7 @@ body {
     background-color: grey;
 }
 
+/*calculator screen*/
 .screen {
     align-self: center;
     width: 210px;
@@ -29,6 +31,7 @@ body {
     position: relative;
 }
 
+/*text display*/
 .screen-text {
     position: absolute;
     bottom: 4px;
@@ -36,11 +39,13 @@ body {
     font-size: 34px;
 }
 
+/*container for all buttons*/
 .container {
     display: flex;
     justify-content: space-between;
 }
 
+/*container for left buttons, containing 0-9 and '.' */
 .numgrid {
     display: flex;
     flex-wrap: wrap;
@@ -49,6 +54,7 @@ body {
     gap: 8px;
 }
 
+/*container for right buttons, containing operations*/
 .options {
     display: flex;
     flex-wrap: wrap;
@@ -58,15 +64,18 @@ body {
     gap: 8px;
 }
 
+/*button sizing*/
 .num, .option{
     width: 36px;
     height: 36px;
 }
 
+/*left buttons*/
 .num {
     background-color: lightblue;
 }
 
+/*right buttons*/
 .option {
     background-color: lightcoral;
 }

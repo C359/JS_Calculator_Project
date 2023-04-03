@@ -57,8 +57,10 @@ buttons.forEach((button)=> button.addEventListener('click', (e)=> {
     checkInput(e.target.id);
 }));
 
+//handle button input to build the state needed to execute expressions
 function checkInput (id) {
 
+    //if clear is pressed reset all state variables
     if (id === 'clear') {
         numOne = 'start';
         numTwo = 'start';
@@ -67,11 +69,13 @@ function checkInput (id) {
         screenText.textContent = 0;
         return;
     }
+    //if 0-9 is pressed, then continue adding to the currentNum being entered
     else if (id.match(/[0-9]/)) {
         currentNum.push(+id);
         setDisplay(currentNum.join(''));
         return;
     } 
+    //if '.' is pressed then check if the value contains a decimal, and if not add one
     else if (id === 'dot') {
         if(!(currentNum.includes('.'))) {
             currentNum.push('.');
@@ -79,34 +83,48 @@ function checkInput (id) {
         }
         return;  
     } 
-    else if (id === 'neg') {
-        if (numOne == 'start') {
+    //if '+/-' is pressed
+    else if (id === 'op-negative') {
+
+        /*if numOne is not yet initialized, or an operation is entered but numTwo 
+        has not yet been initialized then the negative sign applies to a number still being entered*/
+        if (numOne === 'start' || (operation !== 'start')) {
             currentNum.unshift('-');
             setDisplay(currentNum.join(''));
             return;
         }
-        else if(operation == 'start'){
+        /*if numOne contains a value, but operation is not yet entered then negative 
+        sign should apply to numOne that is stored ex: wanting to switch sign after pressing '='*/
+        else if(numOne !== 'start' && operation === 'start'){
             numOne *= -1;
-            setDisplay(numOne)
+            setDisplay(numOne);
             return;
         }
+
     } 
+    //if an operator is pressed and numOne is not initialized with a value, the currentNum can be assigned to it
     else if (id.match(/op*/) && numOne === 'start') {
         numOne = currentNum.join('');
         currentNum = [];
     } 
+    //if an operator is pressed and numTow is not initialized, if an operator has already been entered, the currentNum can be assumed as numTwo
     else if (id.match(/op*/) && numTwo === 'start' && operation !== 'start') {
         numTwo = currentNum.join('');
         currentNum = [];
     }
 
+    //check if two valid numbers and an operator have been entered
     if (numOne !== 'start' && numTwo !== 'start' && id.match(/op*/)) {
         let result = operator(+numOne, operation, +numTwo);
+        //the result of the operation becomes the first operand for the next operation.
         numOne = result;
         numTwo = 'start';
+        //if the button pressed was '=' then the operator will not be used for the next operation cycle. Another operator will need to be entered to overwrite 'start'.
         id === 'op-equals' ? operation = 'start': operation = id;
         return;
     } 
+
+    //line only reached if operator was pressed, but cannot yet evaluate an expression. Store the operator for next evaluation.
     operation = id;
 }
 
@@ -121,8 +139,8 @@ function checkNumber(testNumber) {
     if(numLength > 10 & intLength > 6) {
         return (testNumber.toString().slice(0,6) + '...');
     } 
-    //if the number does not include a decimal or ends with a zero it should not be converted and can be displayed as is
-    else if (!(testNumber.toString().includes('.')) || testNumber.toString()[numLength-1] == 0){
+    //if the number does not include a decimal, ends with a zero, or is only a negative sign, then it should not be converted and can be displayed as is
+    else if (!(testNumber.toString().includes('.')) || testNumber.toString()[numLength-1] == 0 || testNumber.toString() === '-'){
         return testNumber;
     }
     
