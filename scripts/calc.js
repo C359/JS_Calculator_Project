@@ -20,7 +20,7 @@ function operator(numOne, operation, numTwo) {
 
     //if attempting to divide by zero display message
     if (operation === 'op-divide' && numTwo === 0) {
-        screenText.textContent = 'Impossible!';
+        screenText.textContent = 'no way!';
         return result;
     } 
 
